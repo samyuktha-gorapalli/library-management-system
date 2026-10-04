@@ -3,7 +3,7 @@ import mysql.connector
 DB_CONFIG = {
     "host": "127.0.0.1",
     "user": "root",
-    "password": "MySQL@1234",
+    "password": "you_password",
     "database": "librarydb",
 }
 
