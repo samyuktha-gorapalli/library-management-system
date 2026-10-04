@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Members{% endblock %}
+{% block content %}
+<h1>Members</h1>
+
+<form method="post">
+    <input type="text" name="full_name" placeholder="Full name" required>
+    <input type="email" name="email" placeholder="Email" required>
+    <button type="submit">Register Member</button>
+</form>
+
+<table>
+    <tr><th>ID</th><th>Name</th><th>Email</th><th>Joined</th><th>History</th></tr>
+    {% for m in members %}
+    <tr>
+        <td>{{ m.member_id }}</td>
+        <td>{{ m.full_name }}</td>
+        <td>{{ m.email }}</td>
+        <td>{{ m.join_date }}</td>
+        <td><a href="{{ url_for('member_history_page', member_id=m.member_id) }}">View</a></td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

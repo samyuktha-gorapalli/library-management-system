@@ -1,0 +1,26 @@
+{% extends "base.html" %}
+{% block title %}Reports{% endblock %}
+{% block content %}
+<h1>Reports</h1>
+
+<h2>Popular Books</h2>
+<table>
+    <tr><th>Title</th><th>Times Borrowed</th></tr>
+    {% for row in popular %}
+    <tr><td>{{ row.title }}</td><td>{{ row.times_borrowed }}</td></tr>
+    {% endfor %}
+</table>
+
+<h2>Fine Collection</h2>
+<table>
+    <tr><th>Member</th><th>Total Fined</th><th>Paid</th><th>Unpaid</th></tr>
+    {% for row in fines %}
+    <tr>
+        <td>{{ row.full_name }}</td>
+        <td>{{ row.total_fined }}</td>
+        <td>{{ row.paid }}</td>
+        <td>{{ row.unpaid }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

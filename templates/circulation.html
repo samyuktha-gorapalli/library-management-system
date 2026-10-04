@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% block title %}Circulation{% endblock %}
+{% block content %}
+<h1>Circulation</h1>
+
+<h2>Issue a Copy</h2>
+<form method="post">
+    <input type="hidden" name="action" value="issue">
+    <input type="number" name="copy_id" placeholder="Copy ID" required>
+    <input type="number" name="member_id" placeholder="Member ID" required>
+    <button type="submit">Issue</button>
+</form>
+
+<h2>Return a Copy</h2>
+<form method="post">
+    <input type="hidden" name="action" value="return">
+    <input type="number" name="borrow_id" placeholder="Borrow ID" required>
+    <button type="submit">Return</button>
+</form>
+
+<h2>Active Loans</h2>
+<table>
+    <tr><th>Borrow ID</th><th>Title</th><th>Accession No.</th><th>Member</th><th>Issued</th><th>Due</th></tr>
+    {% for row in active_loans %}
+    <tr>
+        <td>{{ row.borrow_id }}</td>
+        <td>{{ row.title }}</td>
+        <td>{{ row.accession_no }}</td>
+        <td>{{ row.full_name }}</td>
+        <td>{{ row.issue_date }}</td>
+        <td>{{ row.due_date }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h2>Overdue</h2>
+<table>
+    <tr><th>Title</th><th>Accession No.</th><th>Member</th><th>Due</th><th>Days Overdue</th></tr>
+    {% for row in overdue %}
+    <tr>
+        <td>{{ row.title }}</td>
+        <td>{{ row.accession_no }}</td>
+        <td>{{ row.member_name }}</td>
+        <td>{{ row.due_date }}</td>
+        <td>{{ row.days_overdue }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

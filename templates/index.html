@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block content %}
+<h1>Dashboard</h1>
+
+<h2>Available Titles</h2>
+<table>
+    <tr><th>Title</th><th>Category</th><th>ISBN</th><th>Accession No.</th></tr>
+    {% for row in available %}
+    <tr>
+        <td>{{ row.title }}</td>
+        <td>{{ row.category }}</td>
+        <td>{{ row.isbn }}</td>
+        <td>{{ row.accession_no }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h2>Overdue Copies</h2>
+<table>
+    <tr><th>Title</th><th>Accession No.</th><th>Member</th><th>Due Date</th><th>Days Overdue</th></tr>
+    {% for row in overdue %}
+    <tr>
+        <td>{{ row.title }}</td>
+        <td>{{ row.accession_no }}</td>
+        <td>{{ row.member_name }}</td>
+        <td>{{ row.due_date }}</td>
+        <td>{{ row.days_overdue }}</td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}Reservations{% endblock %}
+{% block content %}
+<h1>Reservations</h1>
+
+<form method="post">
+    <input type="number" name="volume_id" placeholder="Volume ID" required>
+    <input type="number" name="member_id" placeholder="Member ID" required>
+    <button type="submit">Reserve</button>
+</form>
+
+<table>
+    <tr><th>Title</th><th>Volume ID</th><th>Member</th><th>Queue Position</th><th>Status</th><th>Reserved</th><th></th></tr>
+    {% for r in reservations %}
+    <tr>
+        <td>{{ r.title }}</td>
+        <td>{{ r.volume_id }}</td>
+        <td>{{ r.full_name }}</td>
+        <td>{{ r.queue_position }}</td>
+        <td>{{ r.status }}</td>
+        <td>{{ r.reserved_date }}</td>
+        <td>
+            <form method="post" action="{{ url_for('cancel_reservation_route', reservation_id=r.reservation_id) }}">
+                <button type="submit">Cancel</button>
+            </form>
+        </td>
+    </tr>
+    {% endfor %}
+</table>
+{% endblock %}

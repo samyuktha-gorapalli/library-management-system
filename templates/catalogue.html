@@ -1,0 +1,50 @@
+{% extends "base.html" %}
+{% block title %}Catalogue{% endblock %}
+{% block content %}
+<h1>Catalogue</h1>
+
+<form method="get">
+    <input type="text" name="q" placeholder="Search by title" value="{{ keyword }}">
+    <button type="submit">Search</button>
+</form>
+
+<table>
+    <tr><th>Title</th><th>Category</th><th>ISBN</th><th>Edition</th><th>Accession No.</th><th>Status</th></tr>
+    {% for row in results %}
+    <tr>
+        <td>{{ row.title }}</td>
+        <td>{{ row.category }}</td>
+        <td>{{ row.isbn }}</td>
+        <td>{{ row.edition_no }}</td>
+        <td>{{ row.accession_no }}</td>
+        <td>{{ row.status }}</td>
+    </tr>
+    {% endfor %}
+</table>
+
+<h2>Add Book</h2>
+<form method="post">
+    <input type="hidden" name="form_type" value="book">
+    <input type="text" name="title" placeholder="Title" required>
+    <input type="text" name="category" placeholder="Category">
+    <button type="submit">Add Book</button>
+</form>
+
+<h2>Add Volume (Edition)</h2>
+<form method="post">
+    <input type="hidden" name="form_type" value="volume">
+    <input type="number" name="book_id" placeholder="Book ID" required>
+    <input type="text" name="isbn" placeholder="ISBN" required>
+    <input type="number" name="edition_no" placeholder="Edition No." value="1">
+    <input type="number" name="publication_year" placeholder="Publication Year">
+    <button type="submit">Add Volume</button>
+</form>
+
+<h2>Add Copy</h2>
+<form method="post">
+    <input type="hidden" name="form_type" value="copy">
+    <input type="number" name="volume_id" placeholder="Volume ID" required>
+    <input type="text" name="accession_no" placeholder="Accession No." required>
+    <button type="submit">Add Copy</button>
+</form>
+{% endblock %}

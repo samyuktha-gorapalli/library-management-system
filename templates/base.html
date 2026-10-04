@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Library System{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <nav>
+        <a href="{{ url_for('index') }}">Dashboard</a>
+        <a href="{{ url_for('catalogue_page') }}">Catalogue</a>
+        <a href="{{ url_for('members_page') }}">Members</a>
+        <a href="{{ url_for('circulation_page') }}">Circulation</a>
+        <a href="{{ url_for('reservations_page') }}">Reservations</a>
+        <a href="{{ url_for('reports_page') }}">Reports</a>
+    </nav>
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul class="flashes">
+                {% for m in messages %}<li>{{ m }}</li>{% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>
