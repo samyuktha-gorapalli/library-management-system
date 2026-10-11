@@ -38,8 +38,35 @@ def catalogue_page():
             )
             flash("Volume added.")
         elif form_type == "copy":
-            catalogue.add_copy(request.form["volume_id"], request.form["accession_no"])
-            flash("Copy added.")
+            ok, msg = catalogue.add_copy(request.form["isbn"], request.form["accession_no"])
+            flash(msg, "message" if ok else "error")
+        elif form_type == "update_book":
+            ok, msg = catalogue.update_book(
+                request.form["book_id"], request.form["title"], request.form["category"]
+            )
+            flash(msg, "message" if ok else "error")
+        elif form_type == "delete_book":
+            ok, msg = catalogue.delete_book(request.form["book_id"])
+            flash(msg, "message" if ok else "error")
+        elif form_type == "update_volume":
+            ok, msg = catalogue.update_volume(
+                request.form["isbn"],
+                request.form["new_isbn"],
+                request.form["edition_no"],
+                request.form["publication_year"],
+            )
+            flash(msg, "message" if ok else "error")
+        elif form_type == "delete_volume":
+            ok, msg = catalogue.delete_volume(request.form["isbn"])
+            flash(msg, "message" if ok else "error")
+        elif form_type == "update_copy":
+            ok, msg = catalogue.update_copy(
+                request.form["accession_no"], request.form["new_accession_no"], request.form["status"]
+            )
+            flash(msg, "message" if ok else "error")
+        elif form_type == "delete_copy":
+            ok, msg = catalogue.delete_copy(request.form["accession_no"])
+            flash(msg, "message" if ok else "error")
         return redirect(url_for("catalogue_page"))
 
     keyword = request.args.get("q", "")
@@ -53,8 +80,18 @@ def catalogue_page():
 @app.route("/members", methods=["GET", "POST"])
 def members_page():
     if request.method == "POST":
-        members.register_member(request.form["full_name"], request.form["email"])
-        flash("Member registered.")
+        form_type = request.form.get("form_type")
+        if form_type == "update":
+            ok, msg = members.update_member(
+                request.form["member_id"], request.form["full_name"], request.form["email"]
+            )
+            flash(msg, "message" if ok else "error")
+        elif form_type == "delete":
+            ok, msg = members.delete_member(request.form["member_id"])
+            flash(msg, "message" if ok else "error")
+        else:
+            members.register_member(request.form["full_name"], request.form["email"])
+            flash("Member registered.")
         return redirect(url_for("members_page"))
     return render_template("members.html", members=members.list_members())
 
@@ -76,7 +113,7 @@ def circulation_page():
             ok, msg = circulation.issue_copy(request.form["copy_id"], request.form["member_id"])
         else:
             ok, msg = circulation.return_copy(request.form["borrow_id"])
-        flash(msg)
+        flash(msg, "message" if ok else "error")
         return redirect(url_for("circulation_page"))
 
     return render_template(
@@ -92,10 +129,23 @@ def circulation_page():
 @app.route("/reservations", methods=["GET", "POST"])
 def reservations_page():
     if request.method == "POST":
-        ok, msg = reservations.create_reservation(
-            request.form["volume_id"], request.form["member_id"]
-        )
-        flash(msg)
+        form_type = request.form.get("form_type")
+        if form_type == "update":
+            ok, msg = reservations.update_reservation(
+                request.form["isbn"],
+                request.form["queue_position"],
+                request.form["new_queue_position"],
+                request.form["status"],
+            )
+        elif form_type == "delete":
+            ok, msg = reservations.delete_reservation(
+                request.form["isbn"], request.form["queue_position"]
+            )
+        else:
+            ok, msg = reservations.create_reservation(
+                request.form["accession_no"], request.form["member_id"]
+            )
+        flash(msg, "message" if ok else "error")
         return redirect(url_for("reservations_page"))
     return render_template("reservations.html", reservations=reservations.all_reservations())
 

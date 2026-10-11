@@ -14,10 +14,10 @@
     <tr>
         <td>{{ row.title }}</td>
         <td>{{ row.category }}</td>
-        <td>{{ row.isbn }}</td>
-        <td>{{ row.edition_no }}</td>
-        <td>{{ row.accession_no }}</td>
-        <td>{{ row.status }}</td>
+        <td>{{ row.isbn or '—' }}</td>
+        <td>{{ row.edition_no or '—' }}</td>
+        <td>{{ row.accession_no or '—' }}</td>
+        <td>{{ row.status or '—' }}</td>
     </tr>
     {% endfor %}
 </table>
@@ -43,8 +43,63 @@
 <h2>Add Copy</h2>
 <form method="post">
     <input type="hidden" name="form_type" value="copy">
-    <input type="number" name="volume_id" placeholder="Volume ID" required>
+    <input type="text" name="isbn" placeholder="ISBN" required>
     <input type="text" name="accession_no" placeholder="Accession No." required>
     <button type="submit">Add Copy</button>
+</form>
+
+<h2>Update Book</h2>
+<form method="post">
+    <input type="hidden" name="form_type" value="update_book">
+    <input type="number" name="book_id" placeholder="Book ID" required>
+    <input type="text" name="title" placeholder="New title">
+    <input type="text" name="category" placeholder="New category">
+    <button type="submit">Update Book</button>
+</form>
+
+<h2>Update Volume (Edition)</h2>
+<form method="post">
+    <input type="hidden" name="form_type" value="update_volume">
+    <input type="text" name="isbn" placeholder="ISBN" required>
+    <input type="text" name="new_isbn" placeholder="New ISBN">
+    <input type="number" name="edition_no" placeholder="New Edition No.">
+    <input type="number" name="publication_year" placeholder="New Publication Year">
+    <button type="submit">Update Volume</button>
+</form>
+
+<h2>Update Copy</h2>
+<form method="post">
+    <input type="hidden" name="form_type" value="update_copy">
+    <input type="text" name="accession_no" placeholder="Accession No." required>
+    <input type="text" name="new_accession_no" placeholder="New Accession No.">
+    <input type="text" name="status" placeholder="New status" list="copy-statuses">
+    <datalist id="copy-statuses">
+        <option value="available">
+        <option value="issued">
+        <option value="lost">
+        <option value="under_repair">
+    </datalist>
+    <button type="submit">Update Copy</button>
+</form>
+
+<h2>Delete Book</h2>
+<form method="post">
+    <input type="hidden" name="form_type" value="delete_book">
+    <input type="number" name="book_id" placeholder="Book ID" required>
+    <button type="submit">Delete Book</button>
+</form>
+
+<h2>Delete Volume (Edition)</h2>
+<form method="post">
+    <input type="hidden" name="form_type" value="delete_volume">
+    <input type="text" name="isbn" placeholder="ISBN" required>
+    <button type="submit">Delete Volume</button>
+</form>
+
+<h2>Delete Copy</h2>
+<form method="post">
+    <input type="hidden" name="form_type" value="delete_copy">
+    <input type="text" name="accession_no" placeholder="Accession No." required>
+    <button type="submit">Delete Copy</button>
 </form>
 {% endblock %}

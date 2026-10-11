@@ -21,4 +21,20 @@
     </tr>
     {% endfor %}
 </table>
+
+<h2>Update Member</h2>
+<form method="post">
+    <input type="hidden" name="form_type" value="update">
+    <input type="number" name="member_id" placeholder="Member ID" required>
+    <input type="text" name="full_name" placeholder="New full name">
+    <input type="email" name="email" placeholder="New email">
+    <button type="submit">Update Member</button>
+</form>
+
+<h2>Delete Member</h2>
+<form method="post">
+    <input type="hidden" name="form_type" value="delete">
+    <input type="number" name="member_id" placeholder="Member ID" required>
+    <button type="submit">Delete Member</button>
+</form>
 {% endblock %}

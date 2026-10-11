@@ -81,3 +81,8 @@ button:hover {
     color: #2e7d32;
     margin: 0;
 }
+
+.flashes.error {
+    background: #fdecea;
+    color: #c62828;
+}

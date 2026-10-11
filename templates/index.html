@@ -5,9 +5,10 @@
 
 <h2>Available Titles</h2>
 <table>
-    <tr><th>Title</th><th>Category</th><th>ISBN</th><th>Accession No.</th></tr>
+    <tr><th>Book ID</th><th>Title</th><th>Category</th><th>ISBN</th><th>Accession No.</th></tr>
     {% for row in available %}
     <tr>
+        <td>{{ row.book_id }}</td>
         <td>{{ row.title }}</td>
         <td>{{ row.category }}</td>
         <td>{{ row.isbn }}</td>

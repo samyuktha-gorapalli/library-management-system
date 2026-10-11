@@ -4,17 +4,17 @@
 <h1>Reservations</h1>
 
 <form method="post">
-    <input type="number" name="volume_id" placeholder="Volume ID" required>
+    <input type="text" name="accession_no" placeholder="Accession No." required>
     <input type="number" name="member_id" placeholder="Member ID" required>
     <button type="submit">Reserve</button>
 </form>
 
 <table>
-    <tr><th>Title</th><th>Volume ID</th><th>Member</th><th>Queue Position</th><th>Status</th><th>Reserved</th><th></th></tr>
+    <tr><th>Title</th><th>ISBN</th><th>Member</th><th>Queue Position</th><th>Status</th><th>Reserved</th><th></th></tr>
     {% for r in reservations %}
     <tr>
         <td>{{ r.title }}</td>
-        <td>{{ r.volume_id }}</td>
+        <td>{{ r.isbn }}</td>
         <td>{{ r.full_name }}</td>
         <td>{{ r.queue_position }}</td>
         <td>{{ r.status }}</td>
@@ -27,4 +27,28 @@
     </tr>
     {% endfor %}
 </table>
+
+<h2>Update Reservation</h2>
+<form method="post">
+    <input type="hidden" name="form_type" value="update">
+    <input type="text" name="isbn" placeholder="ISBN" required>
+    <input type="number" name="queue_position" placeholder="Queue Position" required>
+    <input type="number" name="new_queue_position" placeholder="New Queue Position">
+    <input type="text" name="status" placeholder="New status" list="reservation-statuses">
+    <datalist id="reservation-statuses">
+        <option value="waiting">
+        <option value="ready">
+        <option value="fulfilled">
+        <option value="cancelled">
+    </datalist>
+    <button type="submit">Update Reservation</button>
+</form>
+
+<h2>Delete Reservation</h2>
+<form method="post">
+    <input type="hidden" name="form_type" value="delete">
+    <input type="text" name="isbn" placeholder="ISBN" required>
+    <input type="number" name="queue_position" placeholder="Queue Position" required>
+    <button type="submit">Delete Reservation</button>
+</form>
 {% endblock %}
