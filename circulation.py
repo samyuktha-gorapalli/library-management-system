@@ -2,7 +2,7 @@ from datetime import date, timedelta
 from mysql.connector import Error
 from db import get_connection
 
-FINE_RATE_PER_DAY = 5.00   # currency units per day late
+FINE_RATE_PER_DAY = 0.50   # currency units per day late
 DEFAULT_LOAN_DAYS = 14
 
 
